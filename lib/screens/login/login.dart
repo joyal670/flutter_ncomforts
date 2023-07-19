@@ -1,8 +1,18 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 import 'package:ncomfort/data/api/api.dart';
+import 'package:ncomfort/dims/dim.dart';
+import 'package:ncomfort/main.dart';
+import 'package:ncomfort/screens/common/utils.dart';
+import 'package:ncomfort/screens/common/widgets.dart';
+
+import '../../dims/colors.dart';
+import '../../dims/constant.dart';
+import '../dashboard/dashboard/dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -17,11 +27,28 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
 
   @override
+  void initState() {
+    final bool? isUserLogin = preferences.getBool(isLogin);
+    if (isUserLogin != null) {
+      if (isUserLogin) {
+        Future.delayed(Duration(seconds: 0), () {
+          Navigator.of(context)
+              .pushReplacement(MaterialPageRoute(builder: (context) {
+            return DashboardScreen();
+          }));
+        });
+      }
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 color: const Color(0xFF34626C),
@@ -91,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontStyle: FontStyle.normal),
                               ))),
                     ],
-                  ))
+                  )),
             ],
           ),
         ),
@@ -103,60 +130,36 @@ class _LoginScreenState extends State<LoginScreen> {
     final email = emailController.text;
     final password = passwordController.text;
 
-    if (email.isEmpty || password.isEmpty) {
-      MotionToast.error(
-        title: const Text(
-          'All fields are required',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        description: const Text('Please enter all fields'),
-        position: MotionToastPosition.top,
-        barrierColor: Colors.black.withOpacity(0.3),
-        width: 300,
-        height: 80,
-        dismissable: false,
-      ).show(context);
+    if (!context.mounted) {
       return;
     } else {
-      final formData = FormData.fromMap({
-        'phone': email,
-        'password': password,
-      });
-      final result = await ApiDB().loginApi(formData, context);
-      // ignore: use_build_context_synchronously
-      if (result != null) {
-        if (result.status == 200) {
-          MotionToast.success(
-            title: Text(
-              'Welcome ${result?.data?.name}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            description: Text('${result?.response}'),
-            position: MotionToastPosition.top,
-            barrierColor: Colors.black.withOpacity(0.3),
-            width: 300,
-            height: 80,
-            dismissable: false,
-          ).show(context);
-        } else {
-          MotionToast.error(
-            title: Text(
-              'Error',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            description: Text('${result?.response}'),
-            position: MotionToastPosition.top,
-            barrierColor: Colors.black.withOpacity(0.3),
-            width: 300,
-            height: 80,
-            dismissable: false,
-          ).show(context);
+      if (email.isEmpty || password.isEmpty) {
+        CommonUtils()
+            .showErrorMessage(context, "Error", "All fields are required");
+        return;
+      } else {
+        final formData = FormData.fromMap({
+          'phone': email,
+          'password': password,
+        });
+        final result = await ApiDB().loginApi(formData, context);
+        if (result != null) {
+          if (result.status == 200) {
+            if (context.mounted) {
+              preferences.setBool(isLogin, true);
+              CommonUtils().showSuccessToast(context,
+                  result.data!.name.toString(), result.response.toString());
+              Navigator.of(context)
+                  .pushReplacement(MaterialPageRoute(builder: (context) {
+                return DashboardScreen();
+              }));
+            }
+          } else {
+            if (context.mounted) {
+              CommonUtils().showErrorMessage(
+                  context, "Error", result.response.toString());
+            }
+          }
         }
       }
     }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ncomfort/dims/constant.dart';
+import 'package:ncomfort/main.dart';
 
 import '../login/login.dart';
 
@@ -26,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> navigateToLoginPage() async {
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) {
         return LoginScreen();
