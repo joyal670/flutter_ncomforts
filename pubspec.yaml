@@ -38,6 +38,7 @@ dependencies:
   dio: ^5.1.2
   motion_toast: ^2.6.7
   shared_preferences: ^2.1.0
+  flutter_carousel_widget: ^2.0.4
 
 dev_dependencies:
   flutter_test:

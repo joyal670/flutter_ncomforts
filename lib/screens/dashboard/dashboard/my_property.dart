@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ncomfort/dims/colors.dart';
 import 'package:ncomfort/dims/dim.dart';
 import 'package:ncomfort/screens/common/widgets.dart';
+import 'package:ncomfort/screens/dashboard/detailed_pages/property_details.dart';
 
 class MyPropertyScreen extends StatelessWidget {
   const MyPropertyScreen({super.key});
@@ -12,35 +13,44 @@ class MyPropertyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
         itemBuilder: (BuildContext context, index) {
-          return Container(
-            padding: EdgeInsets.all(20),
-            color: colorWhite,
-            child: Row(
-              children: [
-                Image.asset(
-                  'assets/images/Rectangle.png',
-                  width: 125,
-                  height: 90,
-                ),
-                width20,
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextWidget(
-                        title: 'SAR 250.00',
-                        textStyle: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      height5,
-                      TextWidget(
-                        title:
-                            '2 Bed Apartment /2 months free / free maintenance',
-                      ),
-                    ],
+          return InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return PropertyDetails();
+                },
+              ));
+            },
+            child: Container(
+              padding: EdgeInsets.all(20),
+              color: colorWhite,
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/images/Rectangle.png',
+                    width: 125,
+                    height: 90,
                   ),
-                )
-              ],
+                  width20,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextWidget(
+                          title: 'SAR 250.00',
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        height5,
+                        TextWidget(
+                          title:
+                              '2 Bed Apartment /2 months free / free maintenance',
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         },
