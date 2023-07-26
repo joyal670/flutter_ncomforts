@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ncomfort/screens/common/widgets.dart';
+import 'package:ncomfort/screens/dashboard/side_menu/my_profile.dart';
 
 import '../../../dims/colors.dart';
 import '../../../dims/dim.dart';
@@ -177,7 +178,12 @@ class NavDrawer extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           fontSize: 13),
                     ),
-                    onTap: () => {Navigator.of(context).pop()},
+                    onTap: () => {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return MyProfileScreen();
+                      }))
+                    },
                   ),
                   ListTile(
                     dense: true,

@@ -32,3 +32,5 @@ const colorBoulder = Color(0xff7B7B7B);
 const colorTundora2 = Color(0xff454545);
 const colorScorpion = Color(0xff5F5F5F);
 const colorScorpion2 = Color(0xff585858);
+const coloeSpanishGray = Color(0xff999999);
+const coloeSilver = Color(0xffCDCDCD);
