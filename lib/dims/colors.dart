@@ -34,3 +34,4 @@ const colorScorpion = Color(0xff5F5F5F);
 const colorScorpion2 = Color(0xff585858);
 const coloeSpanishGray = Color(0xff999999);
 const coloeSilver = Color(0xffCDCDCD);
+const coloTuna = Color(0xff383443);
