@@ -69,6 +69,10 @@ flutter:
     - assets/images/bar-chart-2.png
     - assets/images/message-square.png
     - assets/images/Rectangle.png
+    - assets/images/bar-chart-2_white.png
+    - assets/images/dollar-sign.png
+    - assets/images/language.png
+    - assets/images/user.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
